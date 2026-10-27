@@ -3,21 +3,13 @@
 ## 1. Document Information
 
 | Field | Details |
-
 |---|---|
-
 | Project | TaskFlow QA Automation |
-
 | Application Under Test | UPEX Dojo |
-
 | Automation Framework | Playwright |
-
 | Programming Language | TypeScript |
-
 | Test Types | UI, REST API, cross-browser, regression |
-
 | CI Platform | GitHub Actions |
-
 | Document Status | Version 1.0 |
 
 ## 2. Objective
@@ -99,23 +91,14 @@ GitHub Actions installs dependencies, checks TypeScript, runs the UI and API sui
 ## 5. Test Environment
 
 | Component | Configuration |
-
 |---|---|
-
 | Operating system | Local development environment or GitHub-hosted runner |
-
 | Runtime | Node.js |
-
 | Language | TypeScript |
-
 | Test framework | Playwright Test |
-
 | Browsers | Chromium, Firefox, WebKit |
-
 | Target application | UPEX Dojo |
-
 | Test credentials | Environment variables and GitHub repository secrets |
-
 | CI platform | GitHub Actions |
 
 The target application and any required test accounts must be available for authenticated tests to execute successfully.
@@ -173,21 +156,13 @@ A passing run indicates that the executed scenarios passed in that environment; 
 ## 9. Risks and Mitigations
 
 | Risk | Mitigation |
-
 |---|---|
-
 | Target application downtime | Check availability and review failure evidence before classifying a defect. |
-
 | Invalid or expired credentials | Validate secret configuration without exposing credential values. |
-
 | Browser-specific failures | Run the configured cross-browser suite and investigate differences. |
-
 | Shared test-data conflicts | Prefer isolated test data and reliable cleanup. |
-
 | Flaky tests | Use condition-based waits, stable locators, and trace/screenshot evidence. |
-
 | External API or application changes | Review unexpected failures and update tests only after confirming intended behavior. |
-
 | Exposed credentials | Use environment variables and repository secrets; never log secret values. |
 
 ## 10. Deliverables
