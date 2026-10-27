@@ -1,10 +1,6 @@
-﻿# TaskFlow QA Automation - Test Plan
-
-
+# TaskFlow QA Automation - Test Plan
 
 ## 1. Document Information
-
-
 
 | Field | Details |
 
@@ -24,123 +20,83 @@
 
 | Document Status | Version 1.0 |
 
-
-
 ## 2. Objective
-
-
 
 The objective of this test effort is to evaluate key TaskFlow application workflows and API behavior through repeatable automated tests. The framework aims to identify functional defects, validate expected responses, reduce repetitive manual testing, and provide diagnostic evidence when tests fail.
 
-
-
 ## 3. Scope
-
-
 
 ### In Scope
 
+- Login and authenticated dashboard access.
 
+- Dashboard and task-management controls.
 
-\- Login and authenticated dashboard access.
+- Opening the task creation form.
 
-\- Dashboard and task-management controls.
+- Creating tasks with valid data.
 
-\- Opening the task creation form.
+- Validation of empty task titles.
 
-\- Creating tasks with valid data.
+- Canceling task creation.
 
-\- Validation of empty task titles.
+- Deleting tasks.
 
-\- Canceling task creation.
+- Authenticated profile access.
 
-\- Deleting tasks.
+- Retrieving the task list.
 
-\- Authenticated profile access.
+- Creating, retrieving, updating, and deleting tasks through the API.
 
-\- Retrieving the task list.
+- Changing task status.
 
-\- Creating, retrieving, updating, and deleting tasks through the API.
+- Rejecting unauthenticated API requests.
 
-\- Changing task status.
+- Validating invalid task titles and statuses.
 
-\- Rejecting unauthenticated API requests.
+- Handling unknown task IDs.
 
-\- Validating invalid task titles and statuses.
+- Running UI tests in Chromium, Firefox, and WebKit.
 
-\- Handling unknown task IDs.
+- TypeScript type checking and GitHub Actions execution.
 
-\- Running UI tests in Chromium, Firefox, and WebKit.
-
-\- TypeScript type checking and GitHub Actions execution.
-
-\- HTML reports and failure diagnostics.
-
-
+- HTML reports and failure diagnostics.
 
 ### Out of Scope
 
+- Production load and stress testing.
 
+- Full penetration testing or security certification.
 
-\- Production load and stress testing.
+- Native mobile application testing.
 
-\- Full penetration testing or security certification.
+- Testing internal database behavior where no supported test interface exists.
 
-\- Native mobile application testing.
-
-\- Testing internal database behavior where no supported test interface exists.
-
-\- Guaranteeing that every possible defect is detected.
-
-
+- Guaranteeing that every possible defect is detected.
 
 ## 4. Test Approach
 
-
-
 ### UI Testing
-
-
 
 Playwright browser automation validates user-facing workflows, visible elements, form validation, and task-management behavior.
 
-
-
 ### API Testing
-
-
 
 Playwright API requests validate HTTP responses, response data, task CRUD operations, input validation, authentication behavior, and unknown resource handling.
 
-
-
 ### Cross-Browser Testing
-
-
 
 The UI suite is configured for Chromium, Firefox, and WebKit to identify browser-specific behavior.
 
-
-
 ### Regression Testing
-
-
 
 Previously automated scenarios are rerun after changes to help detect regressions.
 
-
-
 ### Continuous Integration
-
-
 
 GitHub Actions installs dependencies, checks TypeScript, runs the UI and API suites, and uploads available reports as workflow artifacts.
 
-
-
 ## 5. Test Environment
-
-
 
 | Component | Configuration |
 
@@ -162,83 +118,59 @@ GitHub Actions installs dependencies, checks TypeScript, runs the UI and API sui
 
 | CI platform | GitHub Actions |
 
-
-
 The target application and any required test accounts must be available for authenticated tests to execute successfully.
-
-
 
 ## 6. Test Data and Credential Management
 
+- Use authorized test-account credentials only.
 
+- Supply credentials through the configured environment variables.
 
-\- Use authorized test-account credentials only.
+- Store CI credentials in GitHub repository secrets.
 
-\- Supply credentials through the configured environment variables.
+- Never commit passwords, access tokens, or `.env` files.
 
-\- Store CI credentials in GitHub repository secrets.
+- Use test-created records where possible.
 
-\- Never commit passwords, access tokens, or `.env` files.
+- Clean up test-created data when the scenario and application behavior allow it.
 
-\- Use test-created records where possible.
-
-\- Clean up test-created data when the scenario and application behavior allow it.
-
-\- Avoid relying on shared, mutable data that may cause tests to interfere with one another.
-
-
+- Avoid relying on shared, mutable data that may cause tests to interfere with one another.
 
 ## 7. Entry Criteria
 
-
-
 Testing may begin when:
 
+- Project dependencies are installed.
 
+- Playwright browsers and required system dependencies are available.
 
-\- Project dependencies are installed.
+- The target application is accessible.
 
-\- Playwright browsers and required system dependencies are available.
+- Required environment variables and authorized credentials are configured.
 
-\- The target application is accessible.
+- The relevant test files and configuration are available.
 
-\- Required environment variables and authorized credentials are configured.
-
-\- The relevant test files and configuration are available.
-
-\- The test environment is suitable for execution.
-
-
+- The test environment is suitable for execution.
 
 ## 8. Exit Criteria
 
-
-
 The test cycle is considered complete when:
 
+- TypeScript type checking has completed.
 
+- The configured UI and API test suites have executed.
 
-\- TypeScript type checking has completed.
+- Test results and failures have been reviewed.
 
-\- The configured UI and API test suites have executed.
+- Any failed or skipped tests have been investigated and documented as appropriate.
 
-\- Test results and failures have been reviewed.
+- Relevant reports and diagnostic artifacts are available.
 
-\- Any failed or skipped tests have been investigated and documented as appropriate.
-
-\- Relevant reports and diagnostic artifacts are available.
-
-\- Known limitations and unresolved defects are recorded.
-
-
+- Known limitations and unresolved defects are recorded.
 
 A passing run indicates that the executed scenarios passed in that environment; it does not prove the absence of all defects.
 
-
-
 ## 9. Risks and Mitigations
-
-
 
 | Risk | Mitigation |
 
@@ -258,54 +190,33 @@ A passing run indicates that the executed scenarios passed in that environment; 
 
 | Exposed credentials | Use environment variables and repository secrets; never log secret values. |
 
-
-
 ## 10. Deliverables
 
+- Playwright UI automation suite.
 
+- Playwright API automation suite.
 
-\- Playwright UI automation suite.
+- TypeScript configuration and type checking.
 
-\- Playwright API automation suite.
+- Cross-browser test configuration.
 
-\- TypeScript configuration and type checking.
+- GitHub Actions workflow.
 
-\- Cross-browser test configuration.
+- HTML test reports and available diagnostic artifacts.
 
-\- GitHub Actions workflow.
+- README documentation.
 
-\- HTML test reports and available diagnostic artifacts.
-
-\- README documentation.
-
-\- Test plan and test-case catalog.
-
-
+- Test plan and test-case catalog.
 
 ## 11. Maintenance
 
-
-
 Review the test plan when application workflows, API contracts, authentication requirements, browser configuration, or CI behavior change. Update the test-case catalog to reflect actual implementation and execution status.
-
-
 
 ## 12. Limitations
 
-
-
 Test results depend on the availability and behavior of the target application, valid test data, credentials, and environment configuration. Automated tests cover only the implemented scenarios and assertions.
 
+---
+**Project:** TaskFlow QA Automation  
 
-
-\---
-
-
-
-\*\*Project:\*\* TaskFlow QA Automation  
-
-\*\*Repository:\*\* https://github.com/cjdaprogrammer/taskflow-qa-automation
-
-
-
-
+**Repository:** https://github.com/cjdaprogrammer/taskflow-qa-automation
