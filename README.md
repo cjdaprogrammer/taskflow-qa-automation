@@ -2,39 +2,47 @@
 
 [![TaskFlow QA Automation](https://github.com/cjdaprogrammer/taskflow-qa-automation/actions/workflows/playwright.yml/badge.svg)](https://github.com/cjdaprogrammer/taskflow-qa-automation/actions/workflows/playwright.yml)
 
-An end-to-end QA automation portfolio project using **Playwright, TypeScript, and GitHub Actions** to validate UI workflows and REST API behavior for UPEX Dojo.
+An end-to-end QA automation portfolio project using **Playwright, TypeScript, and GitHub Actions** to validate UI workflows, REST API behavior, and AI response quality for UPEX Dojo and a locally hosted AI model.
 
 ## Project Overview
 
-This project demonstrates practical software quality assurance skills through automated browser testing, API testing, cross-browser validation, and continuous integration.
+This project demonstrates practical software quality assurance skills through automated browser testing, API testing, cross-browser validation, AI quality evaluation, and continuous integration.
 
 ### Key Features
 
 - Cross-browser UI automation with Chromium, Firefox, and WebKit
 - REST API testing using Playwright API testing capabilities
+- AI response quality, reliability, and security testing
+- Local AI model testing using Ollama and Llama 3.2
 - TypeScript static type checking
-- Reusable login helpers and shared test utilities
-- Automated test execution through GitHub Actions
+- Reusable test helpers and shared utilities
+- Automated UI and API test execution through GitHub Actions
 - HTML test reports and failure artifacts
 - Secure test credentials managed through environment variables and GitHub repository secrets
-- Documented test plans and test cases
+- Documented test plans, test cases, and execution reports
 
 ## Technology Stack
 
 | Technology | Purpose |
 |---|---|
-| Playwright | Browser and API automation |
+| Playwright | Browser, API, and AI test automation |
 | TypeScript | Type-safe test development |
 | Node.js | JavaScript runtime |
 | npm | Dependency management |
 | GitHub Actions | Continuous integration |
+| Ollama | Local AI model runtime |
+| Llama 3.2 (3B) | AI model under test |
 | Playwright HTML Reporter | Test execution reports |
 
 ## Test Coverage
 
-The current verified local baseline is **27 UI tests and 11 API tests**. Test counts may change as the suite evolves.
+The project contains three separate testing suites.
 
 ### UI Tests
+
+The current verified baseline is **27 UI tests**.
+
+Test scenarios include:
 
 - Login and dashboard access
 - Dashboard task-management controls
@@ -48,6 +56,10 @@ UI tests are configured to run against Chromium, Firefox, and WebKit.
 
 ### API Tests
 
+The current verified baseline is **11 API tests**.
+
+Test scenarios include:
+
 - Authenticated profile access
 - Task-list response structure
 - Creating and retrieving tasks
@@ -58,6 +70,27 @@ UI tests are configured to run against Chromium, Firefox, and WebKit.
 - Validating invalid task titles and statuses
 - Handling unknown task IDs
 
+### AI Quality, Reliability, and Security Tests
+
+The project includes a separate AI testing suite containing **10 automated checks** using Playwright and a locally hosted Ollama model (`llama3.2:3b`).
+
+| Test ID | Test Scenario |
+|---|---|
+| AI-001 | Validate relevance of software testing explanations |
+| AI-002 | Validate requested bullet-point formatting |
+| AI-003 | Validate explanations of QA concepts |
+| AI-004 | Check response consistency across repeated prompts |
+| AI-005 | Check acknowledgment of unknown fictional information |
+| AI-006a | Reject empty prompts |
+| AI-006b | Reject prompts exceeding the maximum length |
+| AI-006c | Accept valid prompts |
+| AI-SEC-001 | Check protection of a seeded dummy secret |
+| AI-SEC-002 | Check resistance to a direct instruction override |
+
+These tests demonstrate basic AI response-quality evaluation, input validation, consistency checks, and selected prompt-injection/security scenarios.
+
+**Note:** The AI tests run locally against Ollama. They are separate from the UI/API GitHub Actions workflows. Passing these scenarios does not establish overall model accuracy or comprehensive AI security.
+
 ## Prerequisites
 
 Install the following before running the project:
@@ -67,6 +100,11 @@ Install the following before running the project:
 - Git
 
 You also need authorized UPEX Dojo test-account credentials for tests that require authentication.
+
+For the AI testing suite, you additionally need:
+
+- Ollama
+- Llama 3.2 (3B) model
 
 ## Installation
 
@@ -150,7 +188,41 @@ npm run test:webkit
 npm run test:api
 ```
 
-### Run the complete suite
+### AI tests (Local Ollama)
+
+The AI test suite requires Ollama and the `llama3.2:3b` model.
+
+Download the model:
+
+```bash
+ollama pull llama3.2:3b
+```
+
+Make sure the Ollama service is running and accessible at:
+
+```text
+http://127.0.0.1:11434
+```
+
+Run the AI test suite:
+
+```bash
+npm run test:ai
+```
+
+Open the AI HTML report:
+
+```bash
+npx playwright show-report playwright-report-ai
+```
+
+The AI suite uses its own configuration file:
+
+```text
+playwright.ai.config.ts
+```
+
+### Run the complete UI and API suite
 
 ```bash
 npm run test:all
@@ -166,7 +238,7 @@ On Windows PowerShell, use `npm.cmd` and `npx.cmd` if the PowerShell execution p
 
 ## Continuous Integration
 
-GitHub Actions automatically validates the project when code is pushed to `main` or `master`, when a pull request targets those branches, or when the workflow is started manually.
+GitHub Actions automatically validates the UI and API portions of the project when code is pushed to `main` or `master`, when a pull request targets those branches, or when the workflow is started manually.
 
 The workflow:
 
@@ -181,7 +253,9 @@ The workflow:
 
 Repository secrets must be configured for tests that require authentication.
 
-Check the [GitHub Actions workflow](https://github.com/cjdaprogrammer/taskflow-qa-automation/actions/workflows/playwright.yml) for the latest execution results.
+**AI testing is currently executed separately on the local machine using Ollama.** It is not included in the existing GitHub Actions workflow.
+
+Check the [GitHub Actions workflow](https://github.com/cjdaprogrammer/taskflow-qa-automation/actions/workflows/playwright.yml) for the latest UI/API execution results.
 
 ## Reports and Debugging
 
@@ -199,12 +273,22 @@ Replace `path/to/trace.zip` with the actual path to a generated trace file.
 
 CI reports are available in the **Artifacts** section of the relevant GitHub Actions run, provided that artifact creation and upload succeed.
 
+The AI test suite generates its own HTML report in:
+
+```text
+playwright-report-ai/
+```
+
+Generated reports are excluded from Git tracking.
+
 ## Test Documentation
 
 The repository includes QA documentation to support test planning and execution:
 
-- [`docs/TEST-PLAN.md`](docs/TEST-PLAN.md) — test objectives, scope, approach, and planning
-- [`docs/TEST-CASES.md`](docs/TEST-CASES.md) — documented test scenarios and expected results
+- [`docs/TEST-PLAN.md`](docs/TEST-PLAN.md) — UI and API test objectives, scope, approach, and planning
+- [`docs/TEST-CASES.md`](docs/TEST-CASES.md) — documented UI and API test scenarios
+- [`AI_TEST_PLAN.md`](AI_TEST_PLAN.md) — AI test objectives, scope, scenarios, and approach
+- [`AI_TEST_REPORT.md`](AI_TEST_REPORT.md) — AI test execution results and observations
 
 ## Project Structure
 
@@ -218,9 +302,17 @@ taskflow-qa-automation/
 │   └── TEST-CASES.md
 ├── tests/
 │   ├── ui/
-│   └── api/
+│   ├── api/
+│   └── ai/
+│       ├── ai-quality.spec.ts
+│       ├── ai-reliability.spec.ts
+│       ├── ai-security.spec.ts
+│       └── ai-test-helper.ts
+├── AI_TEST_PLAN.md
+├── AI_TEST_REPORT.md
 ├── playwright.config.ts
 ├── playwright.api.config.ts
+├── playwright.ai.config.ts
 ├── package.json
 ├── package-lock.json
 ├── tsconfig.json
@@ -237,6 +329,9 @@ This is a simplified overview of the main project files. Refer to the repository
 - REST API validation
 - Cross-browser testing
 - TypeScript test automation
+- AI response-quality evaluation
+- Basic AI reliability and security testing
+- Input validation and negative testing
 - Assertions and failure diagnostics
 - Environment-based test configuration
 - CI workflow configuration
@@ -248,7 +343,8 @@ This is a simplified overview of the main project files. Refer to the repository
 - Expand negative, boundary-value, and edge-case scenarios.
 - Improve test-data isolation and cleanup.
 - Add sample defect reports and sanitized test-report evidence.
-- Explore accessibility testing and additional security-related test scenarios.
+- Expand AI evaluation with semantic similarity, hallucination detection, and broader prompt-injection scenarios.
+- Explore accessibility testing.
 - Continue improving CI reliability and test diagnostics.
 
 ## Repository
